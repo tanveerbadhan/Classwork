@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+</head>
+<style>
+    img {
+        width:150px;
+    } 
+    p {
+        font-family:Arial;
+    }
+    a {
+        font-family:Arial;
+        color:darkgoldenrod;
+    }
+    .pokemon-box {
+        border:1px solid #555;
+        display:flex;
+        flex-direction: column;
+        gap:3px;
+        padding:20px;
+    }
+    .row {
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+</style>
+<body>
+    <h1>This is an EJS template example</h1>
+    <div class="row">
+        <% for (let i = 0; i < 5; i++) { %>       
+            <div class="pokemon-box">
+                <% if (i < 3) { %>
+                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/012.png"/>
+                <% } else { %>
+                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png"/>
+                <% } %>
+                <p>Hello, I am Butterfree</p>
+                <a href="#">Click here to learn more</a>
+            </div>       
+        <% } %>
+     </div>
+     
+</html>
