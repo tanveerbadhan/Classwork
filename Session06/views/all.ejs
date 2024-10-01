@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>All <% if(labelInternalText){ %>
+        <%if(labelInternalText) { %>
+            <%= labelInternalText %>
+        <% } %>
+    <% } %> Students</p>
+    <p>Total Number of students are <%= studentList.length %></p>
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+    <% for(let i = 0; i < studentList.length; i++) { %>
+        <div style="border: 1px dashed grey; align-self: flex-start; padding: 20px; border-radius: 16px;">
+            <p>Name: <%= studentList[i].name%></p>
+            <p>Gpa: <%= studentList[i].gpa%></p>
+            <p>Tuition Fees Paid: <%= studentList[i].tuitionPaid%></p>
+        </div>
+    <% } %>
+    </div>
+</body>
+</html>
