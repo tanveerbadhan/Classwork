@@ -1,65 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Document</title>
-   <style>
-        body {
-            font-family: Arial;
-        }
-        form {
-            border:1px solid black;
-            width:300px;
-            display:flex;
-            flex-direction:column;
-            gap:8px;
-            padding:20px;
-        }
-        input {
-            padding:8px 12px;
-        }
-        .container {
-            display:flex;
-            flex-direction: row;
-            gap:20px;
-        }        
-   </style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial;
+      }
+      form {
+        border: 1px solid black;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 20px;
+      }
+      input {
+        padding: 8px 12px;
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+      }
+    </style>
+  </head>
+  <body>
     <h1>Menu</h1>
     <ul>
-        <li><a href="/profile">View your profile page</a></li>
-        <li><a href="/faq">FAQ</a></li>
-        <li><a href="/prices">Price of a ride</a></li>
-        <li><a href="/pickup">Pickup a passenger</a></li>
-        <li><a href="/delete">Delete a user</a></li>
-        <li><a href="/reviews">Leave a review</a></li>
-        <li><a href="/logout">Logout</a></li>
+      <li><a href="/profile">View your profile page</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/prices">Price of a ride</a></li>
+      <li><a href="/pickup">Pickup a passenger</a></li>
+      <li><a href="/delete">Delete a user</a></li>
+      <li><a href="/reviews">Leave a review</a></li>
+      <li><a href="/logout">Logout</a></li>
     </ul>
 
-
-
     <div class="container">
-        <div class="box">
-            <h1>Login to the Website</h1>
-            <form method="POST" action="/login">
-                <input type="text" placeholder="Enter email" name="txtEmail"/>
-                <input type="password" placeholder="Enter password" name="txtPassword"/>
-                <button>Login</button>
-            </form>   
-        </div>
-        <div class="box">
-            <h1>Signup for an Account</h1>
-            <form method="POST" action="/signup">
-                <input type="text" placeholder="Enter email" name="txtEmail"/>
-                <input type="password" placeholder="Enter password" name="txtPassword"/>
-                <input type="text" placeholder="Enter user type (driver, rider, admin)" name="txtUserType"/>
-                <button>Create Account</button>
-            </form>
-        </div>
+      <div class="box">
+        <h1>Login to the Website</h1>
+        <form method="POST" action="/login">
+          <input type="text" placeholder="Enter email" name="txtEmail" />
+          <input
+            type="password"
+            placeholder="Enter password"
+            name="txtPassword"
+          />
+          <button>Login</button>
+        </form>
+      </div>
+      <div class="box">
+        <h1>Signup for an Account</h1>
+        <form method="POST" action="/signup">
+          <input type="text" placeholder="Enter email" name="txtEmail" />
+          <input
+            type="password"
+            placeholder="Enter password"
+            name="txtPassword"
+          />
+          <input
+            type="text"
+            placeholder="Enter user type (driver, rider, admin)"
+            name="txtUserType"
+          />
+          <button>Create Account</button>
+        </form>
+      </div>
     </div>
-   <!-- TODO: Show this if the template sends an error message. Otherwise, hide it -->
-   <p>Error message goes here</p>
-</body>
+
+    <% for(let i= 1; i <= 9; i++) { %> <%- include("./partials/demo.ejs", {x:25,
+    y:"Peter", i:`00${i}`}) %> <% } %>
+    <!-- TODO: Show this if the template sends an error message. Otherwise, hide it -->
+    <p>Error message goes here</p>
+  </body>
 </html>
