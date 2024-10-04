@@ -49,7 +49,7 @@ const demo = (req, res, next) => {
 
 // 2. middleware function to check if the person is logged in
 const checkIfUserIsLoggedIn = (req, res, next) => {
-  if (req.session.hasOwnProperty("loggedInUser") === true) {
+  if (req.session.hasOwnProperty("loggedInUser")) {
     // if the user is logged in, then continue on with whatever is in the req,res
     next();
   } else {
@@ -63,48 +63,57 @@ const checkIfUserIsLoggedIn = (req, res, next) => {
   }
 };
 
-// before executing the req,res, check if the user is logged in
-app.get("/prices", checkIfUserIsLoggedIn, (req, res) => {
-  // 2. are you a rider?
+const checkForRider = (req, res, next) => {
   if (req.session.loggedInUser.usertype === "rider") {
-    // 3. if yes, then show the pricing
-    const randomPrice = Math.floor(Math.random() * (30 - 10 + 1) + 10);
-    return res.send(
-      `The current cost of a ride is: $${randomPrice.toFixed(2)}`
-    );
+    next();
   } else {
+    console.log("DEBUG:  User are NOT a rider, so there is an error");
     return res.send(
       `ERROR: Only riders can see this page. You are a ${req.session.loggedInUser.usertype}`
     );
   }
+};
+const checkForDriver = (req, res, next) => {
+  if (req.session.loggedInUser.usertype === "rider") {
+    next();
+  } else {
+    console.log("DEBUG:  User are NOT a rider, so there is an error");
+    return res.send(
+      `ERROR: Only riders can see this page. You are a ${req.session.loggedInUser.usertype}`
+    );
+  }
+};
+const checkForAdmin = (req, res, next) => {
+  if (req.session.loggedInUser.usertype === "rider") {
+    next();
+  } else {
+    console.log("DEBUG:  User are NOT a rider, so there is an error");
+    return res.send(
+      `ERROR: Only riders can see this page. You are a ${req.session.loggedInUser.usertype}`
+    );
+  }
+};
+
+// before executing the req,res, check if the user is logged in
+app.get("/prices", [checkIfUserIsLoggedIn, checkForRider], (req, res) => {
+  // 2. are you a rider?
+  // 3. if yes, then show the pricing
+  const randomPrice = Math.floor(Math.random() * (30 - 10 + 1) + 10);
+  return res.send(`The current cost of a ride is: $${randomPrice.toFixed(2)}`);
 });
 
 app.get("/profile", checkIfUserIsLoggedIn, (req, res) => {
   return res.render("profile.ejs");
 });
 
-app.get("/pickup", checkIfUserIsLoggedIn, (req, res) => {
-  if (req.session.loggedInUser.usertype === "driver") {
-    // 3. if yes, then show the pricing
-    return res.send(
-      "Drive to 165 Kendal Avenue. The passenger is waiting at the Tim Hortons."
-    );
-  } else {
-    return res.send(
-      `ERROR: Only drviers can see this page. You are a ${req.session.loggedInUser.usertype}`
-    );
-  }
+app.get("/pickup", [checkIfUserIsLoggedIn, checkForDriver], (req, res) => {
+  return res.send(
+    "Drive to 165 Kendal Avenue. The passenger is waiting at the Tim Hortons."
+  );
 });
 
-app.get("/delete", (req, res) => {
-  // 1. are you logged in AND you need to be a rider (order matters)
-  if (req.session.loggedInUser.usertype === "admin") {
-    return res.send("SUCCESS: User deleted!");
-  } else {
-    return res.send(
-      `ERROR: Only admins can see this page. You are a ${req.session.loggedInUser.usertype}`
-    );
-  }
+app.get("/delete", checkForAdmin, (req, res) => {
+  return res.send("SUCCESS: User deleted!");
 });
 
 app.get("/", demo, (req, res) => {
